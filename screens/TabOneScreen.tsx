@@ -1,32 +1,34 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { useState } from 'react';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { TheKeyboard } from './TheKeyboard';
+import { TheKeyboardResolution } from './TheKeyboardResolution';
+import { TheKeyboardComments } from './TheKeyboardComments';
 
-export default function TabOneScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-    </View>
-  );
+enum Steps {
+  TheKeyboard = 'TheKeyboard',
+  TheKeyboardResolution = 'TheKeyboardResolution',
+  theKeyboardComments = 'theKeyboardComments',
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+export default function TabOneScreen() {
+  const [step, setStep] = useState(Steps.TheKeyboard);
+
+  if (step === Steps.TheKeyboard) {
+    return <TheKeyboard goNext={() => setStep(Steps.TheKeyboardResolution)} />;
+  }
+
+  if (step === Steps.TheKeyboardResolution) {
+    return (
+      <TheKeyboardResolution
+        goNext={() => setStep(Steps.theKeyboardComments)}
+      />
+    );
+  }
+
+  if (step === Steps.theKeyboardComments) {
+    return (
+      <TheKeyboardComments goNext={() => setStep(Steps.theKeyboardComments)} />
+    );
+  }
+}
