@@ -11,12 +11,14 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Text, View } from '../components/Themed';
 import { styles } from './styles';
 
-export const theKeyboardContent = {
+export const content = {
   keyboard: {
     title: 'The Keyboard Comments',
     contents: [
       'Unless a pretty static page. Add a ScrollView to the page. Users of small devices will love you',
-      'The keyboard avoiding strategy is not a simple task. You can have differences between Android, IOS X and IOS',
+      'Even then. Always be scared of content not being reachable by the user',
+      'The keyboard avoiding strategy is not a simple task. You have do define strategies and offsets',
+      'This strategies differ from IOS, IPhoneX and Android devices',
       'My tip. Create base layouts to treat that in the whole app and',
       'Start an app caring about that',
     ],
@@ -28,7 +30,6 @@ export const TheKeyboardComments = ({ goNext }: any) => {
   const [showTip, setShowTip] = React.useState(false);
 
   const advance = () => {
-    if (count >= 4) return;
     setCount(count + 1);
     Animated.spring(textFontSize, {
       speed: 10,
@@ -42,10 +43,8 @@ export const TheKeyboardComments = ({ goNext }: any) => {
       <ScrollView contentContainerStyle={styles.container}>
         <Animated.Text
           style={{
+            fontSize: 32,
             transform: [
-              {
-                scale: textFontSize,
-              },
               {
                 translateY: textFontSize.interpolate({
                   inputRange: [1, 10],
@@ -55,7 +54,7 @@ export const TheKeyboardComments = ({ goNext }: any) => {
             ],
           }}
         >
-          {theKeyboardContent.keyboard.title}
+          {content.keyboard.title}
         </Animated.Text>
         <View
           style={{
@@ -64,7 +63,7 @@ export const TheKeyboardComments = ({ goNext }: any) => {
             flexDirection: 'column',
           }}
         >
-          {[...Array(count <= 4 ? count : 4)].map((_, index) => (
+          {[...Array(count)].map((_, index) => (
             <Text
               key={index}
               style={{
@@ -75,7 +74,7 @@ export const TheKeyboardComments = ({ goNext }: any) => {
                 paddingHorizontal: 16,
               }}
             >
-              {theKeyboardContent.keyboard.contents[index]}
+              {content.keyboard.contents[index]}
             </Text>
           ))}
         </View>

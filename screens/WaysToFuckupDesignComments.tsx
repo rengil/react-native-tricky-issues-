@@ -1,40 +1,44 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import { Pressable, Animated, Button } from 'react-native';
+import {
+  Pressable,
+  Animated,
+  Button,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { Text, View } from '../components/Themed';
 import { styles } from './styles';
 
 export const content = {
   keyboard: {
-    title: 'The Keyboard',
+    title: 'Tip 3: Beware with the overflow ',
     contents: [
-      'The keyboard. I personally hate the keyboard',
-      'The height of the keyboard is different in ios from android, and android has a thousand. You cant predict the height',
-      'What happens when the keyboard opens. Lets say an input',
-      'So here is an input. Click it',
+      'There is no silver bullet. We need to test in all devices',
+      'For texts that the user enter like names, we can use numberOfLines to block overflows to break the app',
+      'For texts that we control we have to test in the languages, make restrictions',
     ],
   },
 };
-
-export const TheKeyboard = ({ goNext }: any) => {
+export const WaysToFuckupDesignComments = ({ goNext }: any) => {
   const textFontSize = useRef(new Animated.Value(1)).current;
   const [count, setCount] = React.useState(0);
   const [showTip, setShowTip] = React.useState(false);
 
   const advance = () => {
-    if (count >= 4) return;
+    if (count >= 3) return;
     setCount(count + 1);
     Animated.spring(textFontSize, {
       speed: 10,
-      toValue: textFontSize._value + 0.25,
+      toValue: textFontSize._value + 0.1,
       useNativeDriver: false,
     }).start(() => {});
   };
 
   return (
     <Pressable onPress={advance} style={styles.container}>
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <Animated.Text
           style={{
             fontSize: 32,
@@ -61,7 +65,7 @@ export const TheKeyboard = ({ goNext }: any) => {
             <Text
               key={index}
               style={{
-                paddingTop: index * 8,
+                paddingTop: index * 14,
                 fontSize: 16,
                 left: 0,
                 textAlign: 'center',
@@ -72,13 +76,7 @@ export const TheKeyboard = ({ goNext }: any) => {
             </Text>
           ))}
         </View>
-        {count >= 4 ? (
-          <TextInput
-            onFocus={() => setShowTip(true)}
-            style={{ marginTop: 120 }}
-            placeholder="Hey, I am an input"
-          />
-        ) : null}
+
         {showTip && (
           <>
             <Text
@@ -100,7 +98,7 @@ export const TheKeyboard = ({ goNext }: any) => {
             goNext();
           }}
         />
-      </View>
+      </ScrollView>
     </Pressable>
   );
 };

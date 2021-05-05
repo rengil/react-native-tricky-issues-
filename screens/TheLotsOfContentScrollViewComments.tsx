@@ -15,7 +15,7 @@ export const content = {
   keyboard: {
     title: 'That is a Big Big List Mate',
     contents: [
-      'Use ScrollView for static page that can grow. So you take care of small devices not losing content',
+      'Use ScrollView for page that can grow. So you take care of small devices not losing content',
       'If the list tend to grow with time or is a huge list ( think of Freework app ). You need a performatic list',
       'Take your time to understand the config parameters. Long and slow lists makes the user pissed',
       'Know if you need to paginate in the backend',
@@ -43,10 +43,8 @@ export const TheLotsOfContentScrollViewComments = ({ goNext }: any) => {
       <ScrollView contentContainerStyle={styles.container}>
         <Animated.Text
           style={{
+            fontSize: 32,
             transform: [
-              {
-                scale: textFontSize,
-              },
               {
                 translateY: textFontSize.interpolate({
                   inputRange: [1, 10],

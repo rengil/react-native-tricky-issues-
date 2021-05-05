@@ -1,29 +1,55 @@
 import * as React from 'react';
-import { useRef } from 'react';
-import { Pressable, Animated, Button } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { useRef, useState } from 'react';
+import {
+  Pressable,
+  Animated,
+  Image,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { Text, View } from '../components/Themed';
 import { styles } from './styles';
+import bowie from './bowie.jpeg';
 
 export const content = {
   keyboard: {
-    title: 'The Keyboard',
+    title: 'TouchableAreas',
     contents: [
-      'The keyboard. I personally hate the keyboard',
-      'The height of the keyboard is different in ios from android, and android has a thousand. You cant predict the height',
-      'What happens when the keyboard opens. Lets say an input',
-      'So here is an input. Click it',
+      'Sometimes we use icons or text as clickables',
+      'Like a burger menu',
+      'You click in the simular, it works',
+      'You deploy. The user struggles to click. Why?',
+      'Tip 4: The user interacts with the his hang in the app',
     ],
   },
 };
 
-export const TheKeyboard = ({ goNext }: any) => {
+const Content = ({ index }) => {
+  return (
+    <View
+      style={{
+        backgroundColor: index % 2 === 0 ? 'pink' : 'green',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 300,
+        width: '100%',
+      }}
+    >
+      <Image source={bowie} style={{ width: 120, height: 120 }}></Image>
+      <Text>{Math.pow(index, 30) * 712}</Text>
+    </View>
+  );
+};
+
+export const TouchableAreas = ({ goNext }: any) => {
   const textFontSize = useRef(new Animated.Value(1)).current;
   const [count, setCount] = React.useState(0);
   const [showTip, setShowTip] = React.useState(false);
+  const [menu, setMenu] = React.useState(false);
 
   const advance = () => {
-    if (count >= 4) return;
+    if (count >= 6) return;
     setCount(count + 1);
     Animated.spring(textFontSize, {
       speed: 10,
@@ -34,6 +60,21 @@ export const TheKeyboard = ({ goNext }: any) => {
 
   return (
     <Pressable onPress={advance} style={styles.container}>
+      {menu ? (
+        <View
+          style={{
+            backgroundColor: 'black',
+            position: 'absolute',
+            zIndex: 1000,
+            left: 0,
+            height: '100%',
+            width: 70,
+          }}
+        >
+          <Text style={{ fontSize: 32 }}>Start 🏁</Text>
+          <Text style={{ fontSize: 32 }}>Stop ✋</Text>
+        </View>
+      ) : null}
       <View style={styles.container}>
         <Animated.Text
           style={{
@@ -42,7 +83,7 @@ export const TheKeyboard = ({ goNext }: any) => {
               {
                 translateY: textFontSize.interpolate({
                   inputRange: [1, 10],
-                  outputRange: [0, -400],
+                  outputRange: [0, -60],
                 }),
               },
             ],
@@ -72,28 +113,17 @@ export const TheKeyboard = ({ goNext }: any) => {
             </Text>
           ))}
         </View>
-        {count >= 4 ? (
-          <TextInput
-            onFocus={() => setShowTip(true)}
-            style={{ marginTop: 120 }}
-            placeholder="Hey, I am an input"
-          />
+
+        {count >= 3 ? (
+          <TouchableOpacity
+            style={{ marginTop: 72 }}
+            onPress={() => setMenu(!menu)}
+          >
+            <Text>🍔</Text>
+          </TouchableOpacity>
         ) : null}
-        {showTip && (
-          <>
-            <Text
-              style={{
-                marginTop: 32,
-                color: 'teal',
-                textAlign: 'center',
-                fontSize: 24,
-                fontWeight: 'bold',
-              }}
-            >
-              "Tip number 1. Take care about the keyboard"
-            </Text>
-          </>
-        )}
+
+        <View style={{ marginTop: 72 }} />
         <Button
           title="Next"
           onPress={() => {

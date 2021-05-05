@@ -11,14 +11,14 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Text, View } from '../components/Themed';
 import { styles } from './styles';
 
-export const theKeyboardContent = {
+export const content = {
   keyboard: {
     title: 'The Keyboard',
     contents: [
       'The keyboard is a tricky thing',
       'The device size is not that big as the web',
       'Having an keyboard showing, the content might be hidden. Making the user confused',
-      'So here is an input. Click it',
+      'We can adjust the keyboard with some components that will help us avoid it',
     ],
   },
 };
@@ -38,7 +38,11 @@ export const TheKeyboardResolution = ({ goNext }: any) => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={{ height: '100%' }}>
+    <KeyboardAvoidingView
+      behavior="padding"
+      keyboardVerticalOffset={100}
+      style={{ height: '100%' }}
+    >
       <ScrollView contentContainerStyle={styles.container}>
         <Animated.Text
           style={{
@@ -50,7 +54,7 @@ export const TheKeyboardResolution = ({ goNext }: any) => {
             }),
           }}
         >
-          {theKeyboardContent.keyboard.title}
+          {content.keyboard.title}
         </Animated.Text>
         <View
           style={{
@@ -69,7 +73,7 @@ export const TheKeyboardResolution = ({ goNext }: any) => {
                 paddingHorizontal: 16,
               }}
             >
-              {theKeyboardContent.keyboard.contents[index]}
+              {content.keyboard.contents[index]}
             </Text>
           ))}
         </View>

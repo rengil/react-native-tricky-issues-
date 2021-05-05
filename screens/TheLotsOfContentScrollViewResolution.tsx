@@ -6,7 +6,7 @@ import { Text, View } from '../components/Themed';
 import { styles } from './styles';
 import bowie from './bowie.jpeg';
 
-export const theKeyboardContent = {
+export const content = {
   keyboard: {
     title: 'The Lots of Content Scroll View',
     contents: [
@@ -30,6 +30,8 @@ const Content = ({ index }) => {
       }}
     >
       <Image source={bowie} style={{ width: 120, height: 120 }}></Image>
+      <Image source={bowie} style={{ width: 120, height: 120 }}></Image>
+      <Text>{Math.pow(index, 30) * 712}</Text>
       <Text>{Math.pow(index, 30) * 712}</Text>
     </View>
   );
@@ -39,6 +41,7 @@ export const TheLotsOfContentScrollViewResolution = ({ goNext }: any) => {
   const textFontSize = useRef(new Animated.Value(1)).current;
   const [count, setCount] = React.useState(0);
   const [showTip, setShowTip] = React.useState(false);
+  const [numb, setNumb] = React.useState(10);
 
   const advance = () => {
     if (count >= 4) return;
@@ -58,13 +61,19 @@ export const TheLotsOfContentScrollViewResolution = ({ goNext }: any) => {
           goNext();
         }}
       />
-      <Text>Better</Text>
+      <Button
+        title="Increase 1000"
+        onPress={() => {
+          setNumb(numb + 1000);
+        }}
+      />
+      <Text>Using a FlatList</Text>
       <FlatList
         updateCellsBatchingPeriod={300}
         maxToRenderPerBatch={1}
         initialNumToRender={1}
         windowSize={2}
-        data={[...Array(1000)]}
+        data={[...Array(numb)]}
         renderItem={({ item, index }) => <Content index={index} />}
         keyExtractor={(i) => i}
       />
